@@ -65,6 +65,11 @@ export class UpdateVendorProfileDto {
   @IsOptional()
   businessDescription?: string;
 
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  businessLogo?: string;
+
   @ApiProperty({ type: BusinessAddressDto })
   @IsObject()
   @ValidateNested()

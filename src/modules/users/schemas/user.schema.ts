@@ -56,6 +56,10 @@ export class VendorProfile {
   @Prop()
   businessDescription: string;
 
+  @ApiProperty()
+  @Prop()
+  businessLogo: string;
+
   @ApiProperty({ type: Address })
   @Prop({ type: Address })
   businessAddress: Address;

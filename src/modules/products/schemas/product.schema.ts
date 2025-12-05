@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../../users/schemas/user.schema';
-import { Category } from '../../categories/schemas/category.schema';
 
 @Schema({ _id: false })
 export class ProductAttribute {
@@ -68,12 +67,12 @@ export class Product {
   shortDescription: string;
 
   @ApiProperty({ type: String })
-  @Prop({ type: Types.ObjectId, ref: 'Category', required: true })
-  categoryId: Types.ObjectId | Category;
+  @Prop({ type: String, required: true })
+  categoryId: string;
 
   @ApiProperty({ type: String })
-  @Prop({ type: Types.ObjectId, ref: 'Category' })
-  subcategoryId: Types.ObjectId | Category;
+  @Prop({ type: String })
+  subcategoryId: string;
 
   @ApiProperty()
   @Prop({ required: true, min: 0 })

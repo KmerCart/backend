@@ -4,10 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
-// import { ProductsModule } from './modules/products/products.module';
+import { ProductsModule } from './modules/products/products.module';
 // import { CategoriesModule } from './modules/categories/categories.module';
-// import { CartModule } from './modules/cart/cart.module';
-// import { OrdersModule } from './modules/orders/orders.module';
+import { CartModule } from './modules/cart/cart.module';
+import { OrdersModule } from './modules/orders/orders.module';
 // import { ReviewsModule } from './modules/reviews/reviews.module';
 import { VendorsModule } from './modules/vendors/vendors.module';
 import { UploadModule } from './modules/upload/upload.module';
@@ -57,10 +57,10 @@ import { HealthController } from './health.controller';
     UsersModule,
     VendorsModule,
     UploadModule,
-    // ProductsModule,
+    ProductsModule,
+    CartModule,
+    OrdersModule,
     // CategoriesModule,
-    // CartModule,
-    // OrdersModule,
     // ReviewsModule,
     // PayoutsModule,
     // NotificationsModule,
