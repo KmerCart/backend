@@ -29,9 +29,32 @@ async function bootstrap() {
   app.use(helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' }, // Allow images to be loaded from different origins
   }));
+
+  // CORS configuration
+  const allowedOrigins = [
+    configService.get('FRONTEND_URL'),
+    'https://kmercart.onrender.com',
+    'https://backend-haz9.onrender.com',
+    'http://localhost:3000',
+    'http://localhost:5173',
+  ].filter(Boolean);
+
   app.enableCors({
-    origin: configService.get('FRONTEND_URL'),
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, Postman, etc.)
+      if (!origin) return callback(null, true);
+
+      // Check if origin is in allowed list
+      if (allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    exposedHeaders: ['Set-Cookie'],
   });
 
   // Compression
