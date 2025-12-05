@@ -33,6 +33,8 @@ async function bootstrap() {
   // CORS configuration
   const allowedOrigins = [
     configService.get('FRONTEND_URL'),
+    'https://kmercart.com',
+    'https://www.kmercart.com',
     'https://kmercart.onrender.com',
     'https://backend-haz9.onrender.com',
     'http://localhost:3000',
@@ -44,17 +46,29 @@ async function bootstrap() {
       // Allow requests with no origin (mobile apps, Postman, etc.)
       if (!origin) return callback(null, true);
 
+      // In production, allow all Render domains and kmercart.com
+      if (origin.includes('onrender.com') || origin.includes('kmercart.com')) {
+        return callback(null, true);
+      }
+
       // Check if origin is in allowed list
       if (allowedOrigins.some(allowed => origin.startsWith(allowed))) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        // In development, allow all origins
+        if (configService.get('NODE_ENV') !== 'production') {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
       }
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     exposedHeaders: ['Set-Cookie'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
 
   // Compression
