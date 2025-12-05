@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: kmercart-backend
+    env: node
+    region: oregon
+    plan: starter
+    buildCommand: pnpm install --frozen-lockfile && pnpm run build
+    startCommand: pnpm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=512
+      - key: PORT
+        generateValue: true
